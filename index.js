@@ -5,6 +5,13 @@ const jwt = require('jsonwebtoken');
 const secretKey = 'your_secret_key'; 
 app.use(express.urlencoded({extended:false}))
 const port=3000
+const middleware = (req, res, next) => {
+    const sessionId = req.cookies.session;
+    if (!sessionId) {
+      res.redirect("/login");
+      return;
+    }
+}
 app.get("/",(req,res)=>{
     res.sendFile(__dirname+"/index.html")
     console.log(req.url,req.method);
